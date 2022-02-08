@@ -1,33 +1,32 @@
 import '../css/common.css';
 
 const bodyEl = document.body;
-// console.log(bodyEl);
 
-const btnStartEl = document.querySelector('button');
-// console.log(btnStartEl);
+const buttonsEL = {
+  btnStart: document.querySelector('button[data-start]'),
+  btnStop: document.querySelector('button[data-stop]'),
+};
 
-const btnStopEl = btnStartEl.nextElementSibling;
-// console.log(btnStopEl);
+let timerId = null;
 
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
 
-let timerId = null;
-
-btnStartEl.addEventListener('click', () => {
+const { btnStart, btnStop } = buttonsEL;
+btnStart.addEventListener('click', () => {
   timerId = setInterval(() => {
     const color = getRandomHexColor();
 
     bodyEl.style.backgroundColor = color;
 
-    btnStartEl.setAttribute('disabled', 'disabled');
-    btnStopEl.removeAttribute('disabled');
+    btnStart.setAttribute('disabled', 'disabled');
+    btnStop.removeAttribute('disabled');
   }, 1000);
 });
 
-btnStopEl.addEventListener('click', () => {
+btnStop.addEventListener('click', () => {
   clearInterval(timerId);
-  btnStopEl.setAttribute('disabled', 'disabled');
-  btnStartEl.removeAttribute('disabled');
+  btnStop.setAttribute('disabled', 'disabled');
+  btnStart.removeAttribute('disabled');
 });
